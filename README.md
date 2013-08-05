@@ -42,12 +42,57 @@ python setup.py install
 ```
 
 
+Usage
+=====
+Here is simple usage to encrypt and decrypt.
+```python
+# Encrypt (auto-generate initialization vector and salt)
+import m2pycrypto
+secret = m2pycrypto.Secret()
+ciphertext = secret.encrypt(plaintext, password)
+# Better store these for later - you need them for decryption!
+my_iv = secret.iv
+my_salt = secret.salt
+
+
+# Decrypt
+import m2pycrypto
+secret = m2secret.Secret(salt=my_salt, iv=my_iv)
+plaintext = secret.decrypt(password)
+```
+
+More common use is encrypting before storing in a database, like 
+for passwords. Instead of worrying about storing the 3 important
+elements: ciphertext, salt, and iv, m2pycrypto has a serialize()
+function which combines these into a single, ascii-safe string.
+
+Similarly, there is a deserialize() function which re-parses that
+specially-formatted string to extract the salt, iv, and ciphertext
+which it needs to decrypt the data.
+
+```python
+# Encrypt (auto-generate initialization vector and salt)
+import m2pycrypto
+secret = m2pycrypto.Secret()
+secret.encrypt(plaintext, password)
+# This string can be saved to file or database
+serialized_ciphertext = secret.serialize()
+
+
+# Decrypt
+import m2pycrypto
+secret = m2secret.Secret()
+secret.deserialize(serialized_ciphertext)
+plaintext = secret.decrypt(password)
+```
+
+
 Links
 =====
-[Homepage of m2secret](http://www.heikkitoivonen.net/m2secret/)
-[Source code of m2secret (subversion)](http://svn.heikkitoivonen.net/svn/m2secret/trunk/)
-[PyCrypto Homepage](https://www.dlitz.net/software/pycrypto/)
-[PyCrypto on PyPI](https://pypi.python.org/pypi/pycrypto)
+[Homepage of m2secret](http://www.heikkitoivonen.net/m2secret/)  
+[Source code of m2secret (subversion)](http://svn.heikkitoivonen.net/svn/m2secret/trunk/)  
+[PyCrypto Homepage](https://www.dlitz.net/software/pycrypto/)  
+[PyCrypto on PyPI](https://pypi.python.org/pypi/pycrypto)  
 
 
 
