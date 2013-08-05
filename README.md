@@ -1,7 +1,7 @@
 m2pycrypto
 ==========
 
-.. image:: https://secure.travis-ci.org/carschar/m2pycrypto.png?branch=master
+![Build Status](https://secure.travis-ci.org/carschar/m2pycrypto.png?branch=master)
 
 This library is a drop-in replacement for the m2secret helper library.
 m2secret is a handy wrapper around M2Crypto to make secure 256-bit AES
