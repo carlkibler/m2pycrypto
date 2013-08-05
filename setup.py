@@ -12,7 +12,10 @@ setup(
     install_requires=[
         'pycrypto',
         ],
-    test_suite="m2pycrypto",
+    tests_require=[
+        'nose',
+        ],
+    test_suite="tests.m2pycrypto_tests",
     platforms=['any'],
     packages=['m2pycrypto'],
     classifiers=[
