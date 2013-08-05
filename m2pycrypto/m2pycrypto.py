@@ -129,7 +129,7 @@ class Secret:
             password = password.encode('utf8')
 
         # derive 256 bit key using the pbkdf2 standard
-        key = PBKDF2(password, self.salt, keylen=32, iterations=self.iterations)
+        key = PBKDF2(password, self.salt, dkLen=32, count=self.iterations)
 
         # Derive encryption key and HMAC key from it
         # See Practical Cryptography section 8.4.1.
@@ -181,7 +181,7 @@ class Secret:
             password = password.encode('utf8')
 
         # derive 256 bit encryption key using the pbkdf2 standard
-        key = PBKDF2(password, self.salt, keylen=32, iterations=self.iterations)
+        key = PBKDF2(password, self.salt, dkLen=32, count=self.iterations)
 
         # Derive encryption key and HMAC key from it
         # See Practical Cryptography section 8.4.1.
@@ -253,11 +253,15 @@ class Secret:
 
 
 def pkcs7_encode(text, k=16):
+    """Pad text out to k-byte blocks with PKCS#7 algorithm."""
     n = k - (len(text) % k)
     return text + unhexlify(n * ("%02x" % n))
 
 
 def pkcs7_decode(text, k=16):
+    """Remove pad characters from text encoded with PKCS#7 algorithm."""
+    if len(text) == 0:
+        raise ValueError("Empty string implies incorrect padding")
     n = int(hexlify(text[-1]), 16)
     if n > k:
         raise ValueError("Input is not padded or padding is corrupt")
