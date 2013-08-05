@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from distutils.core import setup
+from setuptools import setup, tests
 
 setup(
     name="m2pycrypto",
@@ -12,7 +12,7 @@ setup(
     install_requires=[
         'pycrypto',
         ],
-    test_suite="tests",
+    test_suite="m2pycrypto",
     platforms=['any'],
     packages=['m2pycrypto'],
     classifiers=[
