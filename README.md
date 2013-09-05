@@ -3,17 +3,11 @@ m2pycrypto
 
 ![Build Status](https://secure.travis-ci.org/carschar/m2pycrypto.png?branch=master)
 
-This library is a drop-in replacement for the m2secret helper library.
-m2secret is a handy wrapper around M2Crypto to make secure 256-bit AES
-encryption very simple.
+This library is a drop-in replacement for the m2secret helper library. m2secret is a handy wrapper around M2Crypto to make secure 256-bit AES encryption very simple.
 
-The m2pycrypto library has an identical interface and behavior to
-m2secret, but with the underlying encryption library swapped out:
-instead of M2Crypto it relies on the much more current PyCrypto.
+The m2pycrypto library has an identical interface and behavior to m2secret, but with the underlying encryption library swapped out: instead of M2Crypto it relies on the much more current PyCrypto.
 
-The code is about 95% identical to m2secret and the interface is 100%
-identical. Therefore, most of the credit goes to [Heikki Toivonen](http://www.heikkitoivonen.net/),
-the original author of m2secret.
+The code is about 95% identical to m2secret and the interface is 100% identical. Therefore, most of the credit goes to [Heikki Toivonen](http://www.heikkitoivonen.net/), the original author of m2secret.
 
 
 Why switch to PyCrypto?
@@ -22,6 +16,8 @@ Why switch to PyCrypto?
 * M2Crypto is a pain to compile on OS X and some other platforms.
 * PyCrypto is the opposite: actively maintained and easy to install.
 * PyCrypto supports Python 2.1 through 3.3.
+
+Caveat: pycrypto is about 1/10 as fast. Don't let this dissuade you though. If encryption is your biggest bottleneck then kudos to you! *Many* applications and major websites are using pycrypto. It isn't slow, it just isn't as fast as M2Crypto.
 
 
 How to replace m2secret with m2pycrypto
@@ -63,14 +59,9 @@ secret = m2secret.Secret(salt=my_salt, iv=my_iv)
 plaintext = secret.decrypt(password)
 ```
 
-More common use is encrypting before storing in a database, like 
-for passwords. Instead of worrying about storing the 3 important
-elements: ciphertext, salt, and iv, m2pycrypto has a serialize()
-function which combines these into a single, ascii-safe string.
+More common use is encrypting before storing in a database, like for passwords. Instead of worrying about storing the 3 important elements: ciphertext, salt, and iv, m2pycrypto has a serialize() function which combines these into a single, ascii-safe string.
 
-Similarly, there is a deserialize() function which re-parses that
-specially-formatted string to extract the salt, iv, and ciphertext
-which it needs to decrypt the data.
+Similarly, there is a deserialize() function which re-parses that specially-formatted string to extract the salt, iv, and ciphertext which it needs to decrypt the data.
 
 ```python
 # Encrypt (auto-generate initialization vector and salt)
